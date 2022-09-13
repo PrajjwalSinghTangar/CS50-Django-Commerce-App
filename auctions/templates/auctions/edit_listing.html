@@ -1,0 +1,70 @@
+{% extends 'auctions/layout.html' %}
+
+{% block title %}Auction Item{% endblock  %}
+
+{% block body %}
+
+<div class="m-4">
+    <br>
+    <div class="card mb-3" style="max-width: 100vw;">
+        <div class="row g-0">
+          <div class="col-md-5">
+            <h5 class="card-title text-">{{listing.title}}</h5>
+            <img src="{{listing.image_url}}" class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-md-7">
+            <div class="card-body" style="display:flex; flex-direction:column; height:100%; justify-content:center;">
+              <h5 class="card-title">{{listing.description}}</h5>
+
+              <form action="{% url 'bidding' listing.id %}" method="POST">
+                {% csrf_token %}
+                <div class="input-group input-group-sm mb-3" style="width:50%;">
+                  <span class="input-group-text">Bid: $</span>
+                  <input type="number" class="form-control" aria-label="username" min="{{listing.bid}}" placeholder="{{listing.bid}}"  name="bid">
+                  <input type="submit" class="btn btn-primary">
+                </div>
+              </form>
+
+              <p class="card-text">Category : {{listing.category}}</p>
+              <p class="card-text">Listed By: {{listing.user}}</p>
+
+              <p>
+                <div class="checkbox" >
+                {% if watchlist_item_exists %}
+                  <a href="{% url 'watchlist_remove' listing.id %}">Remove from WatchList</a>
+                {% else %}
+                  <a href="{% url 'watchlist_add' listing.id %}">Add to WatchList</a>
+                {% endif %}
+              </div>
+              </p>
+              {% if is_owner %}
+              <p>
+                <a href="{% url 'bid_close' listing.id %}">Sell to highest winner!</a>
+              </p>
+              {% endif %}
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <h4>Add a comment :</h4>
+      <form action="{% url 'listing' listing.id %}" method="POST">
+        {% csrf_token %}
+            <div class="input-group" >
+              <span class="input-group-text" data-bs-<input type="submit" class="btn btn-primary">Comment:</span>
+              <textarea class="form-control" aria-label="With textarea" name="comment"></textarea>
+              <input type="submit" class="btn btn-primary">
+            </div>
+      </form>
+      <br>
+      <h4>Comments :</h4>
+        {% for comment in comments %}
+          <br>
+          <div style="border:2px solid gray">
+          {{comment.comment}} by {{comment.user}}
+          </div>
+        {% endfor %}
+</div>
+{% endblock  %}

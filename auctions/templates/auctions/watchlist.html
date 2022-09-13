@@ -1,0 +1,28 @@
+{% extends 'auctions/layout.html' %}
+
+{% block title %}WatchList{% endblock  %}
+
+{% block body %}
+
+<div class="m-4">
+    {% for watchlist_item in watchlist_items %}
+    <div class="card mb-3" style="max-width: 100%; border-radius: 40px 0px 40px 0px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{watchlist_item.image_url}}" class="img-fluid rounded-start m-3" style="height:250px;" alt="...">
+            </div>
+            <div class="col-md-8" style="display:flex; align-items:center;">
+                <div class="card-body">
+                    <h5 class="card-title">{{watchlist_item.title}}</h5>
+                    <p class="card-text">{{watchlist_item.description}}</p>
+                    <p class="card-text">Current Bid: ${{watchlist_item.bid}}</p>
+                    <p class="card-text">Listed By: {{watchlist_item.user.username}}</p>
+                    <a href="{% url 'watchlist_item_remove' watchlist_item.id %}">Remove from WatchList</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock  %}

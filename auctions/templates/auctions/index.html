@@ -1,0 +1,26 @@
+{% extends 'auctions/layout.html' %}
+
+{% block title %}Welcome To Auction!{% endblock  %}
+
+{% block body %}
+
+<div class="m-4">
+    {% for auction_item in auction_items %}
+    <div class="card mb-3" style="max-width: 100%; border-radius: 40px 0px 40px 0px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{auction_item.image_url}}" class="img-fluid rounded-start m-3" style="height:250px;" alt="...">
+            </div>
+            <div class="col-md-8" style="display:flex; align-items:center;">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{% url 'listing' auction_item.id %}"> {{auction_item.title}} </a> </h5>
+                    <p class="card-text">{{auction_item.description}}</p>
+                    <p class="card-text">Current Bid: ${{auction_item.bid}}</p>
+                    <p class="card-text">Listed By: {{auction_item.user.username}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock  %}

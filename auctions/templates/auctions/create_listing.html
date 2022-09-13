@@ -1,0 +1,41 @@
+{% extends 'auctions/layout.html' %}
+
+{% block title %}Categories{% endblock  %}
+
+{% block body %}
+<div class="m-4" id="cont1">
+
+<!--Form-->
+    <div style="background-color:#ffffff8c; padding: 20px 10px 40px 10px;">
+        <h2>Want to add an item to auction?</h2>
+         <form action="{% url 'create_listing' %}" method="POST">
+        {% csrf_token %}
+            <div class="input-group mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Please add a title!">
+                <span class="input-group-text ">Title</span>
+                <input type="text" class="form-control" aria-label="username" name="title">
+            </div>
+            <div class="input-group" >
+                <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="top" title="Please add some description!">Description</span>
+                <textarea class="form-control" aria-label="With textarea" name="description"></textarea>
+            </div>
+            <div class="input-group mb-3 mt-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Please add a minimum ammount!">
+                <span class="input-group-text">Starting Bid: $</span>
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="bid">
+                <span class="input-group-text">.00</span>
+            </div>
+            <div class="input-group mb-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Please add an image url!">
+                <span class="input-group-text ">Image Url</span>
+                <input type="text" class="form-control" aria-label="username" name="image_url">
+            </div>
+            <select class="form-select" aria-label="Default select example" name="categories" data-bs-toggle="tooltip" data-bs-placement="top" title="Select one category from the list!">
+                <option selected>Open this select menu</option>
+                    {% for category in categories %}
+                        <option value="{{category.id}}">{{category}}</option>
+                    {% endfor %}
+            </select>
+            <input type="submit" class="btn btn-primary mt-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Submit!">
+        </form>
+    </div>
+
+</div>
+{% endblock  %}
